@@ -1,8 +1,22 @@
 import React from 'react'
 
-export default function Navbar() {
-  return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+function time () { const date = new Date();
+  const month = date.getMonth()+1;
+  const day = date.getDate();
+  const year = date.getFullYear();
+
+  const min = date.getMinutes();
+  const hours = date.getHours();
+  const sec = date.getSeconds();
+
+  document.getElementById('time').innerHTML = day +"-"+ month +"-"+ year +"  "+ hours +":"+ min +":"+ sec ;
+}
+
+setInterval(time,1000);
+  
+  export default function Navbar() {
+    return (
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
         <button
           className="navbar-toggler"
@@ -30,6 +44,7 @@ export default function Navbar() {
                 About
               </a>
             </li>
+            <p className='mx-5 my-2' id='time'> </p>
           </ul>
           <form className="d-flex" role="search">
             <input
