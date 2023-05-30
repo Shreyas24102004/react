@@ -8,10 +8,12 @@ export default function Signup(props) {
     const email = document.getElementById("Email").value;
     const pass = document.getElementById("Password").value;
     const cpass = document.getElementById("ConfirmPassword").value;
-
+    const userData = JSON.parse(localStorage.getItem("UserData"));
+    const alredyemail = userData.filter((user) => user.Email === email);
+    
     if (
       !email.match(
-        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       )
     ) {
       alert("⚠Error! Email is not valid⚠");
@@ -23,10 +25,13 @@ export default function Signup(props) {
       );
     } else if (pass !== cpass) {
       alert("⚠Error! Passwords do not match⚠");
+    } else if (alredyemail.length > 1) {
+        alert("⚠Error! Email address already exists⚠");
     } else {
       let UserData = JSON.parse(localStorage.getItem("UserData") || "[]");
 
       const storeValues = {
+        Id: Math.random(),
         Name: name,
         Email: email,
         Password: pass,
@@ -34,9 +39,6 @@ export default function Signup(props) {
 
       console.log(UserData);
 
-      if (!Array.isArray(UserData)) {
-        UserData = [];
-      }
 
       UserData.push(storeValues);
 
@@ -44,24 +46,26 @@ export default function Signup(props) {
       return false;
     }
   };
+  
+  const [form,setForm] = useState({name:'',Email:'',Password:'',CPassword:''});
 
   function handelOnName(event) {
-    setName(event.target.value);
+    setForm((prvState)=>{return {...prvState,name:event.target.value}});
+    console.log(form);
   }
   function handelOnEmail(event) {
-    setEmail(event.target.value);
+    setForm((prvState)=>{return {...prvState,Email:event.target.value}});
+    console.log(form);
   }
   function handelOnPass(event) {
-    setPassword(event.target.value);
+    setForm((prvState)=>{return {...prvState,Password:event.target.value}});
+    console.log(form);
   }
   function handelOnCpass(event) {
-    setCPassword(event.target.value);
+    setForm((prvState)=>{return {...prvState,CPassword:event.target.value}});
+    console.log(form);
   }
 
-  const [name, setName] = useState("Shreyas");
-  const [Email, setEmail] = useState("shreyas@gmail.com");
-  const [Password, setPassword] = useState("Shreyas@1234");
-  const [CPassword, setCPassword] = useState("Shreyas@1234");
 
   return (
     <>
@@ -73,10 +77,10 @@ export default function Signup(props) {
           </label>
           <input
             type="text"
-            value={name}
             onChange={handelOnName}
             className="form-control"
             id="UserName"
+            placeholder="Enter Name..."
           />
         </div>
         <div className="mb-3">
@@ -88,8 +92,8 @@ export default function Signup(props) {
             className="form-control"
             id="Email"
             aria-describedby="emailHelp"
-            value={Email}
             onChange={handelOnEmail}
+            placeholder="Enter Email..."
           />
         </div>
         <div className="mb-3">
@@ -99,9 +103,9 @@ export default function Signup(props) {
           <input
             type="password"
             className="form-control"
-            value={Password}
             onChange={handelOnPass}
             id="Password"
+            placeholder="Enter Password..."
           />
         </div>
         <div className="mb-3">
@@ -112,8 +116,8 @@ export default function Signup(props) {
             type="password"
             className="form-control"
             id="ConfirmPassword"
-            value={CPassword}
             onChange={handelOnCpass}
+            placeholder="Enter Confirm Password..."
           />
         </div>
         <button type="submit" onClick={storeData} className="btn btn-primary">

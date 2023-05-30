@@ -44,7 +44,9 @@ setInterval(time,1000);
                 About
               </a>
             </li>
+            <li>
             <p className='mx-5 my-2' id='time'> </p>
+            </li>
           </ul>
           <form className="d-flex" role="search">
             <input
