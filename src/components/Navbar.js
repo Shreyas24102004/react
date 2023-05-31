@@ -31,7 +31,7 @@ export default function Navbar(props) {
               }`}
               to="/"
             >
-              Shreyas
+              Sign Up
             </Link>
           <button
             className={`navbar-toggler border border-${

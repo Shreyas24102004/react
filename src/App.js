@@ -5,6 +5,7 @@ import Signup from "./components/Signup";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import Firstscreen from "./components/Firstscreen";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -24,6 +25,14 @@ function App() {
       <BrowserRouter>
         <Navbar mode={mode} onModeChange={onModeChange} />
         <Routes>
+        <Route
+            path="/react"
+            element={
+              <>
+                <Firstscreen></Firstscreen>
+              </>
+            }
+          ></Route>
           <Route
             path="/"
             element={
@@ -38,7 +47,7 @@ function App() {
             path="/Login"
             element={
               <>
-                <Login mode={mode}/>
+                <Login mode={mode} />
               </>
             }
           ></Route>
@@ -46,7 +55,7 @@ function App() {
             path="/Home"
             element={
               <>
-                <Home mode={mode}/>
+                <Home mode={mode} />
               </>
             }
           ></Route>
