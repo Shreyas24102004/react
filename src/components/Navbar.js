@@ -29,7 +29,7 @@ export default function Navbar(props) {
               className={`navbar-brand text-${
                 props.mode === "light" ? "dark" : "light"
               }`}
-              to="/react"
+              to="/"
             >
               Shreyas
             </Link>

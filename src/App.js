@@ -25,7 +25,7 @@ function App() {
         <Navbar mode={mode} onModeChange={onModeChange} />
         <Routes>
           <Route
-            path="/react"
+            path="/"
             element={
               <>
                 <div className="container">
