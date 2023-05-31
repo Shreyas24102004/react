@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup(props) {
+  const [isSignedUp, setIsSignedUp] = useState(false);
+  const navigate = useNavigate();
+
   const storeData = (event) => {
     event.preventDefault();
     // console.log("form submited");
@@ -43,10 +48,17 @@ export default function Signup(props) {
       UserData.push(storeValues);
 
       localStorage.setItem("UserData", JSON.stringify(UserData));
+      setIsSignedUp(true);
       return false;
     }
   };
+  useEffect(() => {
+    if (isSignedUp) {
+      navigate('/Login');
+    }
+  }, [isSignedUp,navigate]);
   
+
   const [form,setForm] = useState({name:'',Email:'',Password:'',CPassword:''});
 
   function handelOnName(event) {
@@ -69,7 +81,7 @@ export default function Signup(props) {
 
   return (
     <>
-      <form>
+      <form className={`text-${props.mode === 'light'?'dark':'light'}`}>
         <h1>{props.title}</h1>
         <div className="mb-3">
           <label htmlFor="Name" className="form-label">
@@ -81,6 +93,7 @@ export default function Signup(props) {
             className="form-control"
             id="UserName"
             placeholder="Enter Name..."
+            style={{backgroundColor: props.mode === 'dark'?'#343a40':'white',color: props.mode === 'dark'?'white':'#343a40'}}
           />
         </div>
         <div className="mb-3">
@@ -94,6 +107,7 @@ export default function Signup(props) {
             aria-describedby="emailHelp"
             onChange={handelOnEmail}
             placeholder="Enter Email..."
+            style={{backgroundColor: props.mode === 'dark'?'#343a40':'white',color: props.mode === 'dark'?'white':'#343a40'}}
           />
         </div>
         <div className="mb-3">
@@ -106,6 +120,7 @@ export default function Signup(props) {
             onChange={handelOnPass}
             id="Password"
             placeholder="Enter Password..."
+            style={{backgroundColor: props.mode === 'dark'?'#343a40':'white',color: props.mode === 'dark'?'white':'#343a40'}}
           />
         </div>
         <div className="mb-3">
@@ -117,7 +132,8 @@ export default function Signup(props) {
             className="form-control"
             id="ConfirmPassword"
             onChange={handelOnCpass}
-            placeholder="Enter Confirm Password..."
+            placeholder="Enter Confirm Password..."            
+            style={{backgroundColor: props.mode === 'dark'?'#343a40':'white',color: props.mode === 'dark'?'white':'#343a40'}}
           />
         </div>
         <button type="submit" onClick={storeData} className="btn btn-primary">
